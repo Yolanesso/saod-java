@@ -9,7 +9,6 @@ public class PointerList<T extends Number> {
         this.size = 0;
     }
 
-    // Добавление элемента в конец списка
     public void append(T data) {
         Node<T> p = new Node<>(data);
         if (head == null) {
@@ -24,6 +23,7 @@ public class PointerList<T extends Number> {
         size++;
     }
 
+    // Итеративная печать списка
     public void printList() {
         Node<T> current = head;
         System.out.print("[");
@@ -37,6 +37,35 @@ public class PointerList<T extends Number> {
         System.out.println("]");
     }
 
+    public void printForwardRecursive() {
+        System.out.print("[");
+        printForwardHelper(head);
+        System.out.println("]");
+    }
+
+    private void printForwardHelper(Node<T> node) {
+        if (node == null) return;
+        System.out.print(node.data);
+        if (node.next != null) {
+            System.out.print(", ");
+        }
+        printForwardHelper(node.next);
+    }
+
+    public void printBackwardRecursive() {
+        System.out.print("[");
+        printBackwardHelper(head);
+        System.out.println("]");
+    }
+
+    private void printBackwardHelper(Node<T> node) {
+        if (node == null) return;
+        printBackwardHelper(node.next);
+        System.out.print(node.data);
+        if (node != head) {
+            System.out.print(", ");
+        }
+    }
 
     public long checkSum() {
         long sum = 0;
@@ -76,18 +105,16 @@ public class PointerList<T extends Number> {
     }
 
     public void clear() {
-        // Проходим по всем узлам и явно обнуляем ссылки
         Node<T> current = head;
         while (current != null) {
             Node<T> next = current.next;
-            current.data = null;  // Освобождаем данные
-            current.next = null;  // Разрываем связь
+            current.data = null;
+            current.next = null;
             current = next;
         }
         head = null;
         size = 0;
     }
-
 
     @Override
     public String toString() {
@@ -110,5 +137,24 @@ public class PointerList<T extends Number> {
             this.data = data;
             this.next = null;
         }
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        PointerList<Integer> list = new PointerList<>();
+        list.append(1);
+        list.append(2);
+        list.append(3);
+        list.append(4);
+
+        System.out.println("Печать в прямом порядке:");
+        list.printForwardRecursive();
+
+        System.out.println("\nПечать в обратном порядке:");
+        list.printBackwardRecursive();
+
+        System.out.println("\nОбычная печать:");
+        list.printList();
     }
 }
