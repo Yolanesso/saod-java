@@ -11,15 +11,15 @@ public class PointerList<T extends Number> {
 
     // Добавление элемента в конец списка
     public void append(T data) {
-        Node<T> newNode = new Node<>(data);
+        Node<T> p = new Node<>(data);
         if (head == null) {
-            head = newNode;
+            head = p;
         } else {
             Node<T> current = head;
             while (current.next != null) {
                 current = current.next;
             }
-            current.next = newNode;
+            current.next = p;
         }
         size++;
     }

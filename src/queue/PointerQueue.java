@@ -2,66 +2,59 @@ package queue;
 
 import java.util.Random;
 
-public class PointerQueue<T extends Number> {
-    public int size;
-    private Node<T> front; // начало очереди (отсюда удаляем)
-    private Node<T> rear;  // конец очереди (сюда добавляем)
+public class PointerQueue<T> {
+    private Node<T> Head; // Начало очереди
+    private Node<T> Tail; // Конец очереди
+    private int size;
 
     public PointerQueue() {
-        this.front = null;
-        this.rear = null;
+        this.Head = null;
+        this.Tail = null;
         this.size = 0;
     }
 
     public void enqueue(T data) {
-        Node<T> newNode = new Node<>(data);
-        if (isEmpty()) {
-            front = newNode;
+        Node<T> p = new Node<>(data);
+        p.next = null;
+        if (Head != null) {
+            Tail.next = p;
         } else {
-            rear.next = newNode;
+            Head = p;
         }
-        rear = newNode;
+
+        Tail = p;
         size++;
     }
 
-    public boolean isEmpty() {
-        return front == null;
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Очередь пуста");
+        }
+        return Head.data;
     }
+
+    public boolean isEmpty() {
+        return Head == null;
+    }
+
     public int size() {
         return size;
     }
 
-    public T dequeue() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Очередь пуста!");
-        }
-        T data = front.data;
-        front = front.next;
-        if (front == null) {
-            rear = null;
-        }
-        size--;
-        return data;
-    }
-
-
-    // Просмотр первого элемента (peek)
-    public T peek() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Очередь пуста!");
-        }
-        return front.data;
+    @SuppressWarnings("unchecked")
+    private T convertToGeneric(int value) {
+        return (T) Integer.valueOf(value);
     }
 
     public void fillAscending(int n) {
         for (int i = 1; i <= n; i++) {
-            enqueue((T) Integer.valueOf(i));
+            enqueue(convertToGeneric(i));
         }
     }
 
     public void fillDescending(int n) {
         for (int i = n; i >= 1; i--) {
-            enqueue((T) Integer.valueOf(i));
+            enqueue(convertToGeneric(i));
         }
     }
 
@@ -69,15 +62,14 @@ public class PointerQueue<T extends Number> {
         Random random = new Random();
         for (int i = 0; i < count; i++) {
             int num = random.nextInt(max - min + 1) + min;
-            enqueue((T) Integer.valueOf(num));
+            enqueue(convertToGeneric(num));
         }
     }
 
-    // Для вывода очереди
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        Node<T> current = front;
+        Node<T> current = Head;
         while (current != null) {
             sb.append(current.data);
             if (current.next != null) sb.append(", ");
