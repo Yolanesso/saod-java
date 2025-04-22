@@ -13,7 +13,6 @@ public class PointerQueueTest {
 
         queue.fillAscending(count);
 
-        // Проверяем размер и порядок элементов
         assertEquals(count, queue.size());
         assertEquals("[1, 2, 3, 4, 5]", queue.toString());
 
@@ -26,7 +25,6 @@ public class PointerQueueTest {
 
         queue.fillDescending(count);
 
-        // Проверяем размер и порядок элементов
         assertEquals(count, queue.size());
         assertEquals("[5, 4, 3, 2, 1]", queue.toString());
 
@@ -41,7 +39,6 @@ public class PointerQueueTest {
 
         queue.fillRandom(count, min, max);
 
-        // Проверяем размер
         assertEquals(count, queue.size());
 
     }

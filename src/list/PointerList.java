@@ -44,7 +44,8 @@ public class PointerList<T extends Number> {
     }
 
     private void printForwardHelper(Node<T> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
         System.out.print(node.data);
         if (node.next != null) {
             System.out.print(", ");
@@ -59,7 +60,8 @@ public class PointerList<T extends Number> {
     }
 
     private void printBackwardHelper(Node<T> node) {
-        if (node == null) return;
+        if (node == null)
+            return;
         printBackwardHelper(node.next);
         System.out.print(node.data);
         if (node != head) {
@@ -122,7 +124,8 @@ public class PointerList<T extends Number> {
         Node<T> current = head;
         while (current != null) {
             sb.append(current.data);
-            if (current.next != null) sb.append(", ");
+            if (current.next != null)
+                sb.append(", ");
             current = current.next;
         }
         sb.append("]");
@@ -154,7 +157,5 @@ class Main {
         System.out.println("\nПечать в обратном порядке:");
         list.printBackwardRecursive();
 
-        System.out.println("\nОбычная печать:");
-        list.printList();
     }
 }
