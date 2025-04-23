@@ -15,13 +15,12 @@ public class PointerQueue<T> {
 
     public void enqueue(T data) {
         Node<T> p = new Node<>(data);
-        p.next = null;
-        if (Head != null) {
-            Tail.next = p;
-        } else {
+        if (Head == null) {
             Head = p;
         }
-
+        if (Tail != null) {
+            Tail.next = p;
+        }
         Tail = p;
         size++;
     }
@@ -72,7 +71,8 @@ public class PointerQueue<T> {
         Node<T> current = Head;
         while (current != null) {
             sb.append(current.data);
-            if (current.next != null) sb.append(", ");
+            if (current.next != null)
+                sb.append(", ");
             current = current.next;
         }
         sb.append("]");

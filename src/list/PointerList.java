@@ -14,7 +14,7 @@ public class PointerList<T extends Number> {
         if (head == null) {
             head = p;
         } else {
-            Node<T> current = head;
+            Node<T> current = head; // Начинаем с головы списка
             while (current.next != null) {
                 current = current.next;
             }
@@ -23,7 +23,6 @@ public class PointerList<T extends Number> {
         size++;
     }
 
-    // Итеративная печать списка
     public void printList() {
         Node<T> current = head;
         System.out.print("[");
