@@ -3,8 +3,8 @@ package queue;
 import java.util.Random;
 
 public class PointerQueue<T> {
-    private Node<T> Head; // Начало очереди
-    private Node<T> Tail; // Конец очереди
+    private Node<T> Head;
+    private Node<T> Tail;
     private int size;
 
     public PointerQueue() {
@@ -23,6 +23,82 @@ public class PointerQueue<T> {
         }
         Tail = p;
         size++;
+    }
+
+    public void printList() {
+        Node<T> current = Head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public long calculateChecksum() {
+        long checksum = 0;
+        Node<T> current = Head;
+        while (current != null) {
+            if (current.data instanceof Number) {
+                checksum += ((Number) current.data).longValue();
+            }
+            current = current.next;
+        }
+        return checksum;
+    }
+
+    public int countSeries() {
+        if (Head == null)
+            return 0;
+
+        int seriesCount = 1;
+        Node<T> current = Head;
+        int prevValue = (Integer) current.data;
+
+        while (current.next != null) {
+            int currentValue = (Integer) current.next.data;
+            if (currentValue < prevValue) {
+                seriesCount++;
+            }
+            prevValue = currentValue;
+            current = current.next;
+        }
+
+        return seriesCount;
+    }
+
+    public void clear() {
+        while (Head != null) {
+            Node<T> next = Head.next;
+            Head.next = null;
+            Head = next;
+        }
+        size = 0;
+    }
+
+    public void printForwardRecursive() {
+        printForwardRecursiveHelper(Head);
+        System.out.println();
+    }
+
+    private void printForwardRecursiveHelper(Node<T> current) {
+        if (current == null) {
+            return;
+        }
+        System.out.print(current.data + " ");
+        printForwardRecursiveHelper(current.next);
+    }
+
+    public void printBackwardRecursive() {
+        printBackwardRecursiveHelper(Head);
+        System.out.println();
+    }
+
+    private void printBackwardRecursiveHelper(Node<T> current) {
+        if (current == null) {
+            return;
+        }
+        printBackwardRecursiveHelper(current.next);
+        System.out.print(current.data + " ");
     }
 
     public T peek() {

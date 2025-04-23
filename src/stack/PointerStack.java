@@ -46,6 +46,80 @@ public class PointerStack<T extends Number> {
         }
     }
 
+    public void printList() {
+        Node<T> current = Head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public long calculateChecksum() {
+        long checksum = 0;
+        Node<T> current = Head;
+        while (current != null) {
+            checksum += current.data.longValue();
+            current = current.next;
+        }
+        return checksum;
+    }
+
+    public int countSeries() {
+        if (Head == null) {
+            return 0;
+        }
+
+        int seriesCount = 1;
+        Node<T> current = Head;
+        T prev = Head.data;
+
+        while (current != null) {
+            if (current.data.doubleValue() < prev.doubleValue()) {
+                seriesCount++;
+            }
+            prev = current.data;
+            current = current.next;
+        }
+
+        return seriesCount;
+    }
+
+    public void clear() {
+        while (Head != null) {
+            Node<T> next = Head.next;
+            Head.next = null;
+            Head = next;
+        }
+        size = 0;
+    }
+
+    public void printForward() {
+        printForwardRecursive(Head);
+        System.out.println();
+    }
+
+    private void printForwardRecursive(Node<T> current) {
+        if (current == null) {
+            return;
+        }
+        System.out.print(current.data + " ");
+        printForwardRecursive(current.next);
+    }
+
+    public void printBackward() {
+        printBackwardRecursive(Head);
+        System.out.println();
+    }
+
+    private void printBackwardRecursive(Node<T> current) {
+        if (current == null) {
+            return;
+        }
+        printBackwardRecursive(current.next);
+        System.out.print(current.data + " ");
+    }
+
     @SuppressWarnings("unchecked")
     private T convertToGeneric(int value) {
         return (T) Integer.valueOf(value);
@@ -57,7 +131,8 @@ public class PointerStack<T extends Number> {
         Node<T> current = Head;
         while (current != null) {
             sb.append(current.data);
-            if (current.next != null) sb.append(", ");
+            if (current.next != null)
+                sb.append(", ");
             current = current.next;
         }
         sb.append("]");
